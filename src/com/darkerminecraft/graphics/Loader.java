@@ -11,6 +11,7 @@ public class Loader {
 		vao.bindIndicesBuffer(indices);
 		vao.storeDataInAttributeList(positions, 0, 3);
 		vao.unbindVao();
+		return new RawModel(vao, indices.length);
 	}
 
 }

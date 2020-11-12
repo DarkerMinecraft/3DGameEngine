@@ -3,6 +3,8 @@ package com.darkerminecraft;
 import static org.lwjgl.opengl.GL11.*;
 
 import com.darkerminecraft.graphics.DisplayManager;
+import com.darkerminecraft.graphics.Loader;
+import com.darkerminecraft.graphics.model.RawModel;
 import com.darkerminecraft.opengl.Vao;
 import com.darkerminecraft.shaders.entities.EntityShader;
 
@@ -21,11 +23,8 @@ public class Game {
 				1, 2, 3 
 		};
 
-		Vao vao = new Vao();
-		vao.bindVao();
-		vao.bindIndicesBuffer(indices);
-		vao.storeDataInAttributeList(vertices, 0, 3);
-		vao.unbindVao();
+		RawModel model = Loader.loadToVAO(vertices, indices);
+		Vao vao = model.getVao();
 
 		EntityShader shader = new EntityShader();
 
@@ -34,7 +33,7 @@ public class Game {
 			glClear(GL_COLOR_BUFFER_BIT);
 			shader.start();
 			vao.bindVao(0);
-			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+			glDrawElements(GL_TRIANGLES, model.getVertexCount(), GL_UNSIGNED_INT, 0);
 			vao.unbindVao(0);
 			shader.stop();
 			DisplayManager.updateDisplay();
