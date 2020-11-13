@@ -32,6 +32,11 @@ public class ShaderProgram {
 		glLinkProgram(programID);
 	}
 	
+	public void storeAllUniformLocations(Uniform... uniforms) {
+		for(Uniform uniform : uniforms) 
+			uniform.storeUniform(programID);
+	}
+	
 	public void start() {
 		glUseProgram(programID);
 	}

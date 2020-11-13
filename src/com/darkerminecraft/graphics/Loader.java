@@ -5,6 +5,16 @@ import com.darkerminecraft.opengl.Vao;
 
 public class Loader {
 	
+	public static RawModel loadToVAO(float[] positions, float[] textureCoords, int[] indices) {
+		Vao vao = new Vao();
+		vao.bindVao();
+		vao.bindIndicesBuffer(indices);
+		vao.storeDataInAttributeList(positions, 0, 3);
+		vao.storeDataInAttributeList(textureCoords, 1, 2);
+		vao.unbindVao();
+		return new RawModel(vao, indices.length);
+	}
+	
 	public static RawModel loadToVAO(float[] positions, int[] indices) {
 		Vao vao = new Vao();
 		vao.bindVao();

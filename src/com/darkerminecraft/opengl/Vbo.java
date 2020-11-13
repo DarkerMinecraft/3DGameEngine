@@ -2,7 +2,8 @@ package com.darkerminecraft.opengl;
 
 import static org.lwjgl.opengl.GL15.*;
 
-import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
 
@@ -20,27 +21,27 @@ public class Vbo {
 	}
 	
 	public void putData(float[] data) {
-		glBufferData(target, getByteBuffer(data), GL_STATIC_DRAW);
+		glBufferData(target, getBuffer(data), GL_STATIC_DRAW);
 	}
 	
 	public void putData(int[] data) {
-		glBufferData(target, getByteBuffer(data), GL_STATIC_DRAW);
+		glBufferData(target, getBuffer(data), GL_STATIC_DRAW);
 	}
 	
 	public void unbindVbo() {
 		glBindBuffer(target, 0);
 	}
 	
-	private ByteBuffer getByteBuffer(float[] data) {
-		ByteBuffer buffer = BufferUtils.createByteBuffer(data.length * 4);
-		for(float f : data) buffer.putFloat(f);
+	private FloatBuffer getBuffer(float[] data) {
+		FloatBuffer buffer = BufferUtils.createFloatBuffer(data.length);
+		buffer.put(data);
 		buffer.flip();
 		return buffer;
 	}
 	
-	private ByteBuffer getByteBuffer(int[] data) {
-		ByteBuffer buffer = BufferUtils.createByteBuffer(data.length * 4);
-		for(int i : data) buffer.putInt(i);
+	private IntBuffer getBuffer(int[] data) {
+		IntBuffer buffer = BufferUtils.createIntBuffer(data.length);
+		buffer.put(data);
 		buffer.flip();
 		return buffer;
 	}
