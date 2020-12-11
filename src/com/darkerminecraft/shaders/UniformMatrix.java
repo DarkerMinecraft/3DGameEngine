@@ -17,8 +17,7 @@ public class UniformMatrix extends Uniform {
 	
 	public void storeMatrix(Matrix4f matrix) {
 		matrix.get(BUFFER);
-		BUFFER.flip();
-		glUniform4fv(super.getLocation(), BUFFER);
+		glUniformMatrix4fv(super.getLocation(), false, BUFFER);
 	}
 
 }

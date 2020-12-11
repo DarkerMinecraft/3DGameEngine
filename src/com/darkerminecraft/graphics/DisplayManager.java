@@ -7,6 +7,8 @@ import static org.lwjgl.system.MemoryUtil.*;
 import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
 import org.lwjgl.opengl.GL;
 
+import com.darkerminecraft.utils.Keyboard;
+
 public class DisplayManager {
 
 	private static int WIDTH = 1280, HEIGHT = 720;
@@ -36,6 +38,7 @@ public class DisplayManager {
 				glViewport(0, 0, width, height);
 			}
 		});
+		glfwSetKeyCallback(window, new Keyboard());
 	}
 
 	public static void updateDisplay() {
@@ -49,6 +52,10 @@ public class DisplayManager {
 	
 	public static boolean isDisplayRunning() {
 		return !glfwWindowShouldClose(window);
+	}
+	
+	public static float getAspectRatio() {
+		return WIDTH / HEIGHT;
 	}
 
 }

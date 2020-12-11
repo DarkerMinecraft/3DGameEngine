@@ -16,15 +16,16 @@ public class Texture {
 
 	private int width, height;
 	private int texture;
+	private int[] data;
 
 	public Texture(String path) {
-		texture = load(path);
+		load(path);
 	}
 
-	private int load(String path) {
+	private void load(String path) {
 		int[] pixels = null;
 		try {
-			BufferedImage image = ImageIO.read(new MyFile("res/" + path).getInputStream());
+			BufferedImage image = ImageIO.read(new MyFile("res/" + path + ".png").getInputStream());
 			width = image.getWidth();
 			height = image.getHeight();
 			pixels = new int[width * height];
@@ -33,7 +34,7 @@ public class Texture {
 			e.printStackTrace();
 		}
 
-		int[] data = new int[width * height];
+		data = new int[width * height];
 		for (int i = 0; i < width * height; i++) {
 			int a = (pixels[i] & 0xff000000) >> 24;
 			int r = (pixels[i] & 0xff0000) >> 16;
@@ -42,7 +43,9 @@ public class Texture {
 
 			data[i] = a << 24 | b << 16 | g << 8 | r;
 		}
-
+	}
+	
+	public void openglBinding() {
 		int result = glGenTextures();
 		glBindTexture(GL_TEXTURE_2D, result);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -53,7 +56,7 @@ public class Texture {
 
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
 		glBindTexture(GL_TEXTURE_2D, 0);
-		return result;
+		texture = result;
 	}
 
 	public void bind() {
@@ -67,5 +70,5 @@ public class Texture {
 	public int getTextureID() {
 		return texture;
 	}
-
+	
 }

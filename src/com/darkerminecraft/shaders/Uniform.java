@@ -13,7 +13,7 @@ public class Uniform {
 		this.name = name;
 	}
 	
-	public void storeUniform(int programID) {
+	protected void storeUniform(int programID) {
 		this.location = glGetUniformLocation(programID, name);
 		if(location == NOT_FOUND)
 			System.out.println("Uniform " + name + " not found in shader program " + programID);
